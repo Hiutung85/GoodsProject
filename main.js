@@ -22,6 +22,7 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 1200,
     height: 800,
+    icon: path.join(__dirname, 'build/SNGN.ico'),
     webPreferences: {
       nodeIntegration: false, 
       contextIsolation: true, 

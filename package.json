@@ -15,20 +15,24 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.guzi.manager",
-    "productName": "我的谷子仓库",
-    "directories": {
-      "output": "dist"
+  "appId": "com.guzi.manager",
+  "productName": "我的谷子仓库",
+  "directories": {
+    "output": "dist"
     },
-    "win": {
-      "target": [
-        "nsis",
-        "portable"
+  "win": {
+    "icon": "build/SNGN.ico",
+    "target": [
+      "nsis",
+      "portable"
       ]
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "installerIcon": "build/SNGN.ico",
+    "uninstallerIcon": "build/SNGN.ico",
+    "installerHeaderIcon": "build/SNGN.ico"
     }
   }
 }
