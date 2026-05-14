@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的谷子仓库</title>
+    <style>
+        /* 【核心修改】全局背景切换为深黑灰色，字体换成温和的米白 */
+        body { 
+            font-family: 'Microsoft YaHei', sans-serif; 
+            background: #1a1b1f; 
+            padding: 20px; 
+            color: #e3e4e6; 
+        }
+        
+        /* 大标题使用主题色：鼠尾草绿 */
+        h1 { 
+            color: #A3C0A1; 
+            text-align: center; 
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* 顶部总统计盒子：深碳灰背景 */
+        .summary-box { 
+            background: #25262c; 
+            border-radius: 12px; 
+            padding: 15px; 
+            max-width: 600px; 
+            margin: 0 auto 20px; 
+            display: flex; 
+            justify-content: space-around; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+        }
+        .summary-item { color: #aaa; text-align: center; font-size: 14px; }
+        /* 统计数字使用主题色：冷香芋紫 */
+        .summary-item span { 
+            display: block; 
+            font-size: 22px; 
+            font-weight: bold; 
+            color: #B7AAC6; 
+            margin-top: 5px;
+        }
+
+        /* 搜索框区域样式 */
+        .search-box { max-width: 850px; margin: 0 auto 20px; text-align: center; }
+        .search-box input { 
+            width: 95%; 
+            padding: 10px 20px; 
+            background: #25262c;
+            border: 2px solid #3e404a; 
+            border-radius: 25px; 
+            font-size: 15px; 
+            color: #e3e4e6;
+            outline: none; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            transition: all 0.3s; 
+        }
+        /* 搜索框聚焦时：边框高亮成鼠尾草绿 */
+        .search-box input:focus { 
+            border-color: #A3C0A1; 
+            background: #2d2f36; 
+            box-shadow: 0 4px 12px rgba(163, 192, 161, 0.2); 
+        }
+
+        /* 表单区域：碳灰背景 */
+        .form-box { 
+            background: #25262c; 
+            border-radius: 16px; 
+            padding: 20px; 
+            max-width: 850px; 
+            margin: 0 auto 30px; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2); 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            z-index: 9999; 
+        }
+        /* 表单输入框暗黑适配 */
+        .form-box input, .form-box select { 
+            padding: 8px 12px; 
+            background: #1a1b1f;
+            border: 1px solid #3e404a; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            color: #e3e4e6;
+            outline: none; 
+        }
+        .form-box input:focus, .form-box select:focus { 
+            border-color: #B7AAC6; /* 聚焦时变成香芋紫 */
+        }
+        
+        /* 选图片按钮暗黑化 */
+        .file-input-label { 
+            background: #32343e; 
+            border: 1px dashed #555; 
+            padding: 7px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 13px; 
+            color: #ccc; 
+        }
+        .file-input-label:hover { background: #3e414f; }
+        #guzi-image { display: none; }
+
+        /* 新谷入库按钮使用：冷香芋紫 */
+        .form-box button { 
+            background: #B7AAC6; 
+            color: #25262c; /* 深色字更清晰 */
+            border: none; 
+            padding: 8px 20px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .form-box button:hover { 
+            background: #a597b5; 
+            box-shadow: 0 0 10px rgba(183, 170, 198, 0.4);
+        }
+
+        /* 角色大区块 */
+        .character-section { 
+            background: #25262c; 
+            border-radius: 16px; 
+            padding: 20px; 
+            margin-bottom: 30px; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2); 
+            overflow: hidden; 
+        }
+        
+        /* 角色标题行：左边竖条换成鼠尾草绿 */
+        .character-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 5px solid #A3C0A1; 
+            padding-left: 10px; 
+            margin-bottom: 20px; 
+            border-bottom: 1px dashed #3e404a; 
+            padding-bottom: 10px; 
+        }
+        .character-title { font-size: 22px; color: #e3e4e6; font-weight: bold; }
+        /* 每个角色的小账本：使用香芋紫半透明底色 */
+        .character-sum { 
+            font-size: 14px; 
+            color: #B7AAC6; 
+            font-weight: bold; 
+            background: rgba(183, 170, 198, 0.1); 
+            padding: 4px 14px; 
+            border-radius: 15px; 
+            border: 1px solid rgba(183, 170, 198, 0.2);
+        }
+
+        .type-section { margin-bottom: 20px; clear: both; }
+        /* 制品分类小标签：暗黑浅灰底 */
+        .type-title { 
+            font-size: 14px; 
+            color: #aaa; 
+            background: #1a1b1f; 
+            padding: 4px 14px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin-bottom: 15px; 
+            border: 1px solid #3e404a;
+        }
+        
+        /* 网格与卡片 */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        /* 谷子卡片：背景使用更深的墨黑，和外盒子拉开层次 */
+        .card { 
+            background: #1a1b1f; 
+            border: 1px solid #2d2f36; 
+            border-radius: 12px; 
+            padding: 10px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+            position: relative; 
+            transition: all 0.2s; 
+        }
+        .card:hover { 
+            transform: translateY(-3px); 
+            border-color: #4e515f;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; background: #25262c; }
+        .card .title { margin: 8px 0 4px; font-weight: bold; font-size: 14px; color: #e3e4e6; }
+        .card .info { display: flex; justify-content: space-between; font-size: 13px; margin-top: 5px;}
+        /* 卡片价格：使用香芋紫 */
+        .card .price { color: #B7AAC6; font-weight: bold; }
+        /* 卡片数量：使用鼠尾草绿 */
+        .card .count { color: #A3C0A1; font-weight: bold; }
+
+        /* 卡片右上角悬浮小按钮 */
+        .card-ops { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; z-index: 999; }
+        .card:hover .card-ops { opacity: 1; }
+        .delete-mini-btn, .edit-mini-btn { width: 26px; height: 26px; border-radius: 50%; border: none; color: #1a1b1f !important; cursor: pointer; display: flex !important; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        
+        /* 编辑按钮：鼠尾草绿 */
+        .edit-mini-btn { background: #A3C0A1 !important; }
+        .edit-mini-btn:hover { background: #8fae8d !important; }
+        /* 删除按钮：依然保留柔和暗红，防止误删 */
+        .delete-mini-btn { background: #ff6b81 !important; }
+        .delete-mini-btn:hover { background: #ff4757 !important; }
+    </style>
+</head>
+<body>
+
+    <h1>谷子收纳仓库</h1>
+
+    <div class="summary-box">
+        <div class="summary-item">总数量<span id="total-count">0</span></div>
+        <div class="summary-item">总价<span id="total-price">￥0.00</span></div>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="🔍 输入谷子名称或角色名，瞬间定位...">
+    </div>
+
+    <div class="form-box">
+        <input type="text" id="guzi-name" placeholder="谷子名称" style="width: 180px;">
+        <input type="text" id="guzi-char" placeholder="所属角色" style="width: 120px;">
+        
+        <select id="guzi-cat">
+            <option value="吧唧">吧唧</option>
+            <option value="亚克力">亚克力</option>
+            <option value="纸片">纸片</option>
+            <option value="其他">其他</option>
+        </select>
+
+        <input type="number" id="guzi-price" placeholder="单价" style="width: 70px;" min="0" step="0.01">
+        <input type="number" id="guzi-count" placeholder="数量" style="width: 50px;" min="1" value="1">
+        
+        <label class="file-input-label" for="guzi-image">📷 选择谷美图</label>
+        <input type="file" id="guzi-image" accept="image/*">
+        <span id="file-name-preview" style="font-size: 12px; color: #888; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">未选择</span>
+        
+        <button id="add-btn" data-edit-index="-1">新谷入库 </button>
+        <button id="cancel-btn" style="display: none; background: #555; color: #fff;">取消编辑</button>
+    </div>
+
+    <div id="warehouse"></div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
