@@ -203,6 +203,40 @@
         /* 删除按钮：依然保留柔和暗红，防止误删 */
         .delete-mini-btn { background: #ff6b81 !important; }
         .delete-mini-btn:hover { background: #ff4757 !important; }
+
+        /* 分类小标签样式 */
+        .tag {
+            display: inline-block;
+            background: rgba(186, 168, 232, 0.2); /* 淡淡的香芋紫 */
+            color: #baabe8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-bottom: 6px;
+            border: 1px solid rgba(186, 168, 232, 0.3);
+        }
+
+        /* 角色头部的筛选区域 */
+        .character-ops-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .char-filter-select {
+            background: #2a2a2e;
+            color: #eee;
+            border: 1px solid #444;
+            padding: 3px 8px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .char-filter-select:hover {
+            border-color: #baabe8;
+}
     </style>
 </head>
 <body>
@@ -222,12 +256,13 @@
         <input type="text" id="guzi-name" placeholder="谷子名称" style="width: 180px;">
         <input type="text" id="guzi-char" placeholder="所属角色" style="width: 120px;">
         
-        <select id="guzi-cat">
-            <option value="吧唧">吧唧</option>
-            <option value="亚克力">亚克力</option>
-            <option value="纸片">纸片</option>
-            <option value="其他">其他</option>
-        </select>
+    <select id="guzi-cat">
+        <option value="吧唧">吧唧</option>
+        <option value="亚克力">亚克力</option>
+        <option value="纸片">纸片</option>
+        <option value="杯垫">杯垫</option> <!-- 🌟 新增这一行 -->
+        <option value="其他">其他</option>
+    </select>
 
         <input type="number" id="guzi-price" placeholder="单价" style="width: 70px;" min="0" step="0.01">
         <input type="number" id="guzi-count" placeholder="数量" style="width: 50px;" min="1" value="1">
